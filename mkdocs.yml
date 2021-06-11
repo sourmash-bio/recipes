@@ -1,0 +1,31 @@
+site_name: sourmash Recipes
+site_url: http://sourmash-bio.github.io/recipes/
+repo_name: recipes
+repo_url: https://github.com/sourmash-bio/recipes/
+edit_uri: ""
+
+#copyright: 'Copyright &copy; 2020 <a href="http://ivory.idyll.org/lab/">Lab for Data Intensive Biology</a> at UC Davis'
+
+# change directory names here
+docs_dir: doc
+site_dir: site
+
+theme:
+  name: material
+
+  # pretty colors! see https://squidfunk.github.io/mkdocs-material/getting-started/#primary-colors
+  palette:
+    primary: 'brown'
+    accent: 'amber'
+  
+  # fun logos! see https://material.io/icons/
+  icon:
+    logo: material/school
+
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  
+# optionally give a title for each page or section
+nav:
+  - 'Home': '00_homepage.md'
