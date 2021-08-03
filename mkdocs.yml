@@ -1,10 +1,10 @@
-site_name: sourmash Recipes
+site_name: sourmash recipes
 site_url: http://sourmash-bio.github.io/recipes/
 repo_name: recipes
 repo_url: https://github.com/sourmash-bio/recipes/
 edit_uri: ""
 
-#copyright: 'Copyright &copy; 2020 <a href="http://ivory.idyll.org/lab/">Lab for Data Intensive Biology</a> at UC Davis'
+copyright: 'Copyright &copy; 2021 <a href="http://ivory.idyll.org/lab/">Lab for Data Intensive Biology</a> at UC Davis'
 
 # change directory names here
 docs_dir: docs
