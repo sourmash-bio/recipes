@@ -1,0 +1,10 @@
+name: sourmash-recipes 
+channels:
+    - conda-forge
+    - bioconda
+    - defaults
+dependencies:
+  - krona=2.8
+  - pandas=1.2.4
+  - sourmash>=4.2.1,<5
+  - jupyterlab

@@ -28,4 +28,5 @@ theme:
   
 # optionally give a title for each page or section
 nav:
-  - 'Home': '00_homepage.md'
+  - 'Home': '00.homepage.md'
+  - 'Taxonomic integration': '01.sourmash-tax.md'
