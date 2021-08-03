@@ -1,0 +1,694 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="http://sourmash-bio.github.io/recipes/01.sourmash-tax/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.2">
+    
+    
+      
+        <title>Taxonomic integration - sourmash recipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1118c9be.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ba0d045b.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#ffc105">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="amber" data-md-color-accent="brown">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sourmash-tax-submodule" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="sourmash recipes" class="md-header__button md-logo" aria-label="sourmash recipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            sourmash recipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Taxonomic integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/sourmash-bio/recipes/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    recipes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="sourmash recipes" class="md-nav__button md-logo" aria-label="sourmash recipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+
+    </a>
+    sourmash recipes
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/sourmash-bio/recipes/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    recipes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00.homepage/" class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Taxonomic integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Taxonomic integration
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-this-tutorial" class="md-nav__link">
+    Running this tutorial
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-example-inputs-for-sourmash-tax" class="md-nav__link">
+    Download example inputs for sourmash tax
+  </a>
+  
+    <nav class="md-nav" aria-label="Download example inputs for sourmash tax">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-and-look-at-the-gtdb-rs202-lineage-file" class="md-nav__link">
+    download and look at the gtdb-rs202 lineage file
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combining-taxonomies-with-sourmash-tax-prepare" class="md-nav__link">
+    Combining taxonomies with sourmash tax prepare
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sourmash-tax-metagenome" class="md-nav__link">
+    sourmash tax metagenome
+  </a>
+  
+    <nav class="md-nav" aria-label="sourmash tax metagenome">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-a-small-demo-sourmash-gather-output-file-from-metagenome-hsma33mx" class="md-nav__link">
+    Download a small demo sourmash gather output file from metagenome HSMA33MX
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sourmash-tax-genome" class="md-nav__link">
+    sourmash tax genome
+  </a>
+  
+    <nav class="md-nav" aria-label="sourmash tax genome">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lets-download-the-full-gather-file" class="md-nav__link">
+    Let's download the full gather file:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sourmash-tax-annotate" class="md-nav__link">
+    sourmash tax annotate
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-this-tutorial" class="md-nav__link">
+    Running this tutorial
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-example-inputs-for-sourmash-tax" class="md-nav__link">
+    Download example inputs for sourmash tax
+  </a>
+  
+    <nav class="md-nav" aria-label="Download example inputs for sourmash tax">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-and-look-at-the-gtdb-rs202-lineage-file" class="md-nav__link">
+    download and look at the gtdb-rs202 lineage file
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combining-taxonomies-with-sourmash-tax-prepare" class="md-nav__link">
+    Combining taxonomies with sourmash tax prepare
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sourmash-tax-metagenome" class="md-nav__link">
+    sourmash tax metagenome
+  </a>
+  
+    <nav class="md-nav" aria-label="sourmash tax metagenome">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-a-small-demo-sourmash-gather-output-file-from-metagenome-hsma33mx" class="md-nav__link">
+    Download a small demo sourmash gather output file from metagenome HSMA33MX
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sourmash-tax-genome" class="md-nav__link">
+    sourmash tax genome
+  </a>
+  
+    <nav class="md-nav" aria-label="sourmash tax genome">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lets-download-the-full-gather-file" class="md-nav__link">
+    Let's download the full gather file:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sourmash-tax-annotate" class="md-nav__link">
+    sourmash tax annotate
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="sourmash-tax-submodule">sourmash tax submodule</h1>
+<p><em>(for integrating taxonomic information)</em></p>
+<h2 id="background">Background</h2>
+<p>The sourmash tax (alias <code>taxonomy</code>) commands integrate taxonomic information into the results of sourmash gather. tax commands require a properly formatted taxonomy csv file that corresponds to the database used for gather. For supported databases (e.g. GTDB), we provide these files, but they can also be generated for user-generated databases. For more information, see the <a href="https://sourmash.readthedocs.io/en/latest/databases.html">databases documentation</a>.</p>
+<p>These commands rely upon the fact that gather results are non-overlapping: the fraction match for gather on each query will be between 0 (no database matches) and 1 (100% of query matched). We use this property to aggregate gather matches at the desired taxonomic rank. For example, if the gather results for a metagenome include results for 30 different strains of a given species, we can sum the fraction match to each strain to obtain the fraction match to this species.</p>
+<p>As with all reference-based analysis, results can be affected by the completeness of the reference database. However, summarizing taxonomic results from gather minimizes the impact of reference database issues that can derail standard k-mer LCA approaches. See the <a href="">blog post</a> for a full explanation, and the <a href="https://sourmash.readthedocs.io/en/latest/command-line.html#sourmash-tax-prepare-prepare-and-or-combine-taxonomy-files"><code>sourmash tax</code> documentation</a> for additional usage details.</p>
+<h2 id="running-this-tutorial">Running this tutorial</h2>
+<p>Run through these commands interactively on the binder, here:</p>
+<blockquote>
+<p>Alternatively, you can install the latest version of sourmash by following our 
+<a href="https://github.com/sourmash-bio/sourmash/blob/latest/README.md#installation">installation instructions</a>
+and run these commands on your own computer.</p>
+</blockquote>
+<h2 id="download-example-inputs-for-sourmash-tax">Download example inputs for <code>sourmash tax</code></h2>
+<p>In this example, we'll be using a small test dataset run against both the <code>GTDB-rs202</code> database
+and our legacy <code>Genbank</code> database. (New genbank databases coming soon, please bear with us :).</p>
+<h4 id="download-and-look-at-the-gtdb-rs202-lineage-file">download and look at the gtdb-rs202 lineage file</h4>
+<pre><code>mkdir -p lineages
+curl -L https://osf.io/p6z3w/download -o lineages/gtdb-rs202.taxonomy.csv
+</code></pre>
+<pre><code>head lineages/gtdb-rs202.taxonomy.csv
+</code></pre>
+<p>This is the taxonomy file in <code>csv</code> format. 
+The column headers for <code>GTDB</code> are the accession (<code>ident</code>), and the taxonomic ranks <code>superkingdom</code> --&gt; <code>species</code>. </p>
+<p>Now let's go ahead and grab the <code>genbank</code> taxonomy files as well:</p>
+<pre><code>curl -L https://osf.io/cbhgd/download -o lineages/bacteria_genbank_lineages.csv
+curl -L https://osf.io/urtfx/download -o lineages/protozoa_genbank_lineages.csv
+</code></pre>
+<blockquote>
+<p>If you do a <code>head</code> on these files, you'll notice they have an extra <code>taxid</code> column, but otherwise follow the same format.</p>
+</blockquote>
+<h2 id="combining-taxonomies-with-sourmash-tax-prepare">Combining taxonomies with <code>sourmash tax prepare</code></h2>
+<p>All sourmash tax commands must be given one or more taxonomy files as parameters to the --taxonomy argument. </p>
+<p><code>sourmash tax prepare</code> is a utility function that can ingest and validate multiple CSV files or sqlite3 
+databases, and output a CSV file or a sqlite3 database. It can be used to combine multiple taxonomies 
+into a single file, as well as change formats between CSV and sqlite3.</p>
+<blockquote>
+<p>Note: <code>--taxonomy</code> files can be either CSV files or (as of sourmash 4.2.1) sqlite3 databases.
+sqlite3 databases are much faster for large taxonomies, while CSV files are easier to view 
+and modify using spreadsheet software.</p>
+</blockquote>
+<p>Let's use <code>tax prepare</code> to combine the downloaded taxonomies and output into a sqlite3 database:</p>
+<pre><code>sourmash tax prepare --taxonomy lineages/bacteria_genbank_lineages.csv \
+                                lineages/protozoa_genbank_lineages.csv \
+                                lineages/gtdb-rs202.taxonomy.csv \
+                                -o lineages/gtdb-rs202_genbank.taxonomy.db
+</code></pre>
+<blockquote>
+<p>Note that the order here <strong>is</strong> important if the databases contain overlapping
+accession identifiers. In this case, GTDB contains only a subset of all identifiers
+in the NCBI taxonomy. Putting GTDB last here will allow the GTDB lineage information
+to override the lineage information provided in the NCBI file, thus utilizing GTDB
+taxonomy when available, and NCBI lienages for all other accessions.</p>
+</blockquote>
+<p>We'll use this prepared database in each of the commands below.</p>
+<h2 id="sourmash-tax-metagenome"><code>sourmash tax metagenome</code></h2>
+<h4 id="download-a-small-demo-sourmash-gather-output-file-from-metagenome-hsma33mx">Download a small demo <code>sourmash gather</code> output file from metagenome <code>HSMA33MX</code></h4>
+<pre><code>mkdir -p gather
+curl -L https://osf.io/xb8jg/download -o gather/HSMA33MX_gather_x_gtdbrs202_genbank_k31.csv
+</code></pre>
+<blockquote>
+<p>This <code>gather</code> was run at a DNA ksize of 31 against both GTDB and our legacy Genbank database.</p>
+</blockquote>
+<p>Here's an abbreviated version of this gather CSV:</p>
+<pre><code>f_match,f_unique_to_query,name,query_name
+0.084,0.088,&quot;GCF_001881345.1 Escherichia coli strain=SF-596, ASM188134v1&quot;,HSMA33MX
+0.104,0.077,&quot;GCF_009494285.1 Prevotella copri strain=iAK1218, ASM949428v1&quot;,HSMA33MX
+0.007,0.041,&quot;GCA_002754635.1 Plasmodium vivax strain=CMB-1, CMB-1_v2&quot;,HSMA33MX
+</code></pre>
+<p>You can look at the whole file like so:</p>
+<pre><code>head gather/HSMA33MX_gather_x_gtdbrs202_genbank_k31.csv
+</code></pre>
+<p>Now, let's summarize this metagenome and produce <code>krona</code> output at the <code>species</code> level:</p>
+<pre><code>sourmash tax metagenome --gather-csv gather/HSMA33MX_gather_x_gtdbrs202_k31.csv \
+                        --taxonomy  lineages/gtdb-rs202_genbank.taxonomy.db \
+                        --output-format csv_summary krona --rank species
+                        --output-base HSMA33MX.gather-tax.
+</code></pre>
+<p>This will produce both <code>csv_summary</code> and <code>krona</code> output files, with the basename <code>HSMA33MX.gather-tax.</code>.</p>
+<p>We can also download a second metagenome <code>gather</code> csv and use <code>metagenome</code> to generate a 
+<code>lineage_summary</code> output to compare these samples.</p>
+<pre><code>curl -L https://osf.io/nqtgs/download -o gather/PSM7J4EF_gather_x_gtdbrs202_genbank_k31.csv
+</code></pre>
+<p>example <code>lineage_summary</code> output:</p>
+<pre><code>lineage HSMA33MX   PSM7J4EF
+Eukaryota;Apicomplexa;Aconoidasida;Haemosporida;Plasmodiidae;Plasmodium;Plasmodium vivax    0.041084962106102914    0.004553734061930784
+Eukaryota;Apicomplexa;Conoidasida;Eucoccidiorida;Sarcocystidae;Toxoplasma;Toxoplasma gondii 0.010370961308336658    0.0011275912915257177
+d__Bacteria;p__Bacteroidota;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;s__Bacteroides fragilis    0   0.05134877266024807
+d__Bacteria;p__Bacteroidota;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;s__Bacteroides ovatus  0   0.056726515742909184
+</code></pre>
+<blockquote>
+<p>The lineage summary format is most useful when comparing across metagenome queries.
+Each row is a lineage at the desired reporting rank. The columns are each query used for
+gather, with the fraction match reported for each lineage. This format is commonly used
+as input for many external multi-sample visualization tools.</p>
+</blockquote>
+<h2 id="sourmash-tax-genome"><code>sourmash tax genome</code></h2>
+<p>To illustrate the utility of genome, let’s consider a signature consisting of two different 
+Shewanella strains, Shewanella baltica OS185 strain=OS185 and Shewanella baltica OS223 strain=OS223.
+For simplicity, we gave this query the name “Sb47+63”.</p>
+<p>When we gather this signature against the gtdb-rs202 representatives database, we see 66% matches to one strain, and 33% to the other:</p>
+<p>abbreviated <code>gather_csv</code>:</p>
+<pre><code>f_match,f_unique_to_query,name,query_name
+0.664,0.664,&quot;GCF_000021665.1 Shewanella baltica OS223 strain=OS223, ASM2166v1&quot;,Sb47+63
+0.656,0.335,&quot;GCF_000017325.1 Shewanella baltica OS185 strain=OS185, ASM1732v1&quot;,Sb47+63
+</code></pre>
+<blockquote>
+<p>Here, f_match shows that independently, both strains match ~65% percent of this mixed query.
+The f_unique_to_query column has the results of gather-style decomposition. As the OS223 strain
+had a slightly higher f_match (66%), it was the first match. The remaining 33% of the query
+matched to strain OS185.</p>
+</blockquote>
+<h4 id="lets-download-the-full-gather-file">Let's download the full <code>gather</code> file:</h4>
+<pre><code>curl -L https://osf.io/pgsc2/download -o gather/Sb47+63_x_gtdb-rs202.gather.csv
+</code></pre>
+<p>We can use tax genome on this gather csv to classify our “Sb47+63” mixed-strain query:</p>
+<pre><code>sourmash tax genome --gather-csv gather/Sb47+63_x_gtdb-rs202.gather.csv \
+                    --taxonomy lineages/gtdb-rs202_genbank.taxonomy.db \
+                    --output-base Sb47+63.gather-tax. 
+</code></pre>
+<blockquote>
+<p>This command uses the default classification strategy, which uses a containment threshold of 0.1 (10%).
+Note that even though this gather was only run against <code>gtdb-rs202</code>, there's no issue with using the
+full taxonomy database we prepared above, as it contains all of the <code>gtdb-rs202</code> information.</p>
+</blockquote>
+<p>The default output format is <code>csv_summary</code>.</p>
+<p>This outputs a csv with taxonomic classification for each query genome. This output currently consists of six columns:
+<code>query_name</code>,<code>rank</code>,<code>fraction</code>,<code>lineage</code>,<code>query_md5</code>,<code>query_filename</code>, where <code>fraction</code> is the fraction of the query matched to
+the reported rank and lineage. The <code>status</code> column provides additional information on the classification:</p>
+<ul>
+<li><code>match</code> - this query was classified</li>
+<li><code>nomatch</code> - this query could not be classified</li>
+<li><code>below_threshold</code> - this query was classified at the specified rank,
+but the query fraction matched was below the containment threshold</li>
+</ul>
+<pre><code>query_name,status,rank,fraction,lineage
+&quot;Sb47+63&quot;,match,species,1.000,d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacterales;f__Shewanellaceae;g__Shewanella;s__Shewanella baltica
+</code></pre>
+<blockquote>
+<p>Here, we see that the match percentages to both strains have been aggregated, and we have 100% species-level
+Shewanella baltica annotation. We have omitted the query_md5 and query_filename columns for brevity.</p>
+</blockquote>
+<h2 id="sourmash-tax-annotate"><code>sourmash tax annotate</code></h2>
+<p><code>sourmash tax annotate</code> adds a column with taxonomic lineage information for each database match to gather output. 
+It does not do any LCA summarization or classification. The results from <code>annotate</code> are not required for any other
+<code>tax</code> command, but may be useful if you're doing your own exploration of <code>gather</code> results.</p>
+<pre><code>sourmash tax annotate --gather-csv gather/Sb47+63_gather_x_gtdbrs202_k31.csv \
+                       --taxonomy lineages/gtdb-rs202_genbank.taxonomy.db
+</code></pre>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../00.homepage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 <a href="http://ivory.idyll.org/lab/">Lab for Data Intensive Biology</a> at UC Davis
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.2b46852b.min.js"></script>
+      
+    
+  </body>
+</html>
